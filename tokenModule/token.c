@@ -77,7 +77,7 @@ char **splitWords(char *userInput) {
 
 static struct {
     char *word;
-    emum type;
+    enum token_type_t type;
 } tokens[] = {
     {"+", OPERATOR},
     {"-", OPERATOR},
@@ -85,8 +85,8 @@ static struct {
     {"/", OPERATOR},
     {":", SYMBOL},
     {";", SYMBOL},
-    {NULL, NULL} // add more here
-}
+    {NULL, SYMBOL} // add more here
+};
 
 //asignes token an enum 
 struct token_t charecterizeToken(char *token) {

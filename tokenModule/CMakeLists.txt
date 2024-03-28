@@ -2,7 +2,7 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-add_executable(main main.c token.c stack.c push-tokens.c dictionary.c)
+add_executable(main main.c token.c stack.c process-tokens.c dictionary.c)
 
 target_link_libraries(
   main
