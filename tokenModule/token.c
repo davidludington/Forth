@@ -20,28 +20,6 @@ int isNotWhitespace(char c) {
     return c != ' ' && c != '\t' && c != '\n';
 }
 
-int isOperator(const char *input) {
-    size_t numOperators = sizeof(OPERATORS) / sizeof(OPERATORS[0]);
-
-    for (size_t i = 0; i < numOperators; ++i) {
-        if (strcmp(input, OPERATORS[i]) == 0) {
-            return 1; // Input is an operator
-        }
-    }
-    return 0; // Input is not an operator
-}
-
-int isSymbol(const char *input) {
-    size_t numSymbols = sizeof(SYMBOLS) / sizeof(SYMBOLS[0]);
-
-    for (size_t i = 0; i < numSymbols; ++i) {
-        if (strcmp(input, SYMBOLS[i]) == 0) {
-            return 1; // Input is an operator
-        }
-    }
-    return 0; // Input is not an operator
-}
-
 int isNumber(const char *str) {
     // Handle the case where the string is empty
     if (*str == '\0') {
@@ -97,23 +75,34 @@ char **splitWords(char *userInput) {
     return words;
 }
 
+static struct {
+    char *word;
+    emum type;
+} tokens[] = {
+    {"+", OPERATOR},
+    {"-", OPERATOR},
+    {"*", OPERATOR},
+    {"/", OPERATOR},
+    {":", SYMBOL},
+    {";", SYMBOL},
+    {NULL, NULL} // add more here
+}
+
 //asignes token an enum 
 struct token_t charecterizeToken(char *token) {
-    if(strlen(token) == 1 && isOperator(token)){
-        //is a operator
-        return create_token(OPERATOR, token);
-    }else if(strlen(token) == 1 && isSymbol(token)){
-        return create_token(SYMBOL, token);
-    }else{
-        // decipher if its a number or else it is a word
-        if(isNumber(token)){
+
+    for(int i = 0; tokens[i].word != NULL; i++){
+         if (strcmp(token, tokens[i].word) == 0) {
+            return create_token(tokens[i].type, token);
+        }
+    }
+    // not found
+    if(isNumber(token)){
            return create_token(NUMBER, token);
         }else{
         // it is a word
             return create_token(WORD, token);
         }
-        
-    }
 }
 
 // takes string of user input and return array of tokens  
