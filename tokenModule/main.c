@@ -4,6 +4,7 @@
 #include "token.h"
 #include "stack.h"
 #include "dictionary.h"
+#include "process-tokens.h"
 
 //this is where the program starts
 

@@ -96,6 +96,7 @@ char **splitWords(char *userInput) {
 
     return words;
 }
+
 //asignes token an enum 
 struct token_t charecterizeToken(char *token) {
     if(strlen(token) == 1 && isOperator(token)){

@@ -1,5 +1,5 @@
-#ifndef PUSH_TOKENS_H
-#define PUSH_TOKENS_H
+#ifndef PROCESS_TOKENS_H
+#define PROCESS_TOKENS_H
 
 #include "stack.h"
 #include "token.h"

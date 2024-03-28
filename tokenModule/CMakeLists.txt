@@ -15,7 +15,7 @@ add_executable(
   stack.c
   token.c
   dictionary.c
-  push-tokens.c
+  process-tokens.c
 )
 
 target_link_libraries(

@@ -4,7 +4,7 @@
 
 extern "C" {
 #include "stack.h"
-#include "push-tokens.h"
+#include "process-tokens.h"
 #include "token.h"
 #include "dictionary.h"
 }
