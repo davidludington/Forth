@@ -23,6 +23,7 @@ static struct {
     {"2swap", two_swap},
     {"2over", two_over},
     {"2dup", two_dup},
+    {"<", }
     {NULL, NULL}
 };
 

@@ -5,7 +5,8 @@ enum token_type_t {
     NUMBER,
     SYMBOL,
     OPERATOR,
-    WORD
+    WORD, 
+    COMPARISON
 };
 // Struct to represent a token
 struct token_t {

@@ -194,6 +194,94 @@ int two_drop(stack_i *stk){
     return stack_pop(stk, &next_to_top_value);
 }
 
+
+int less_than(stack_i *stk){
+    int top, next_to_top;
+    stack_pop(stk, &top);
+    stack_pop(stk, &next_to_top);
+    if(next_to_top < top){
+        stack_push(stk, 1);
+        return 1; //return 1 if true, should we return -1 instead?
+    }else{
+        stack_push(stk, 0);
+        return 0;
+    }
+}
+int greater_than(stack_i *stk){
+    int top, next_to_top;
+    int_stack_pop(stk, &top);
+    int_stack_pop(stk, &next_to_top);
+    if(next_to_top > top){
+        stack_push(stk, 1);
+        return 1;
+    }else{
+        stack_push(stk, 0);
+        return 0;
+    }
+}
+int equal(stack_i *stk){
+    int top, next_to_top;
+    int_stack_pop(stk, &top);
+    int_stack_pop(stk, &next_to_top);
+    if(next_to_top == top){
+        stack_push(stk, 1);
+        return 1;
+    }else{
+        stack_push(stk, 0);
+        return 0;
+    }
+
+}
+int not_equal(stack_i *stk){
+    int top, next_to_top;
+    int_stack_pop(stk, &top);
+    int_stack_pop(stk, &next_to_top);
+    if(next_to_top != top){
+        stack_push(stk, 1);
+        return 1;
+    }else{
+        stack_push(stk, 0);
+        return 0;
+    }
+
+}
+int zero_less_than(stack_i *stk){
+    int top;
+    int_stack_pop(stk, &top);
+    if(top < 0){
+        stack_push(stk, 1);
+        return 1;
+    }else{
+        stack_push(stk, 0);
+        return 0;
+    }
+
+}
+int zero_greater_than(stack_i *stk){
+    int top;
+    int_stack_pop(stk, &top);
+    if(top > 0){
+        stack_push(stk, 1);
+        return 1;
+    }else{
+        stack_push(stk, 0);
+        return 0;
+    }
+}
+int zero_equal(stack_i *stk){
+    int top;
+    int_stack_pop(stk, &top);
+    if(top == 0){
+        stack_push(stk, 1);
+        return 1;
+    }else{
+        stack_push(stk, 0);
+        return 0;
+    }
+}
+
+
+
 void stack_print(stack_i *stk, FILE *file) {
     entry_t *entry;
     int pos = 0;

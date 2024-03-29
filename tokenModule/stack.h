@@ -38,6 +38,16 @@ int two_dup(stack_i *stk);
 int two_swap(stack_i *stk);
 int two_over(stack_i *stk);
 int two_drop(stack_i *stk);
+
+//comparisons
+int less_than(stack_i *stk);
+int greater_than(stack_i *stk);
+int equal(stack_i *stk);
+int not_equal(stack_i *stk);
+int zero_less_than(stack_i *stk);
+int zero_greater_than(stack_i *stk);
+int zero_equal(stack_i *stk);
+
 void stack_print(stack_i *stk, FILE *file);
 void stack_print_console(stack_i *stk);
 

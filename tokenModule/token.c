@@ -7,6 +7,8 @@
 //add more if you see fit
 const char *OPERATORS[] = {"+", "-", "*", "/"};
 const char *SYMBOLS[] = {":", ";"};
+const char *COMPARISONS[] = {"<", ">", "<>", "=", "0>", "0<"};
+
 
 // Function to create a token
 struct token_t create_token(enum token_type_t type, const char *text) {
@@ -85,6 +87,12 @@ static struct {
     {"/", OPERATOR},
     {":", SYMBOL},
     {";", SYMBOL},
+    {"<", COMPARISON},
+    {"<>", COMPARISON},
+    {">", COMPARISON},
+    {"=", COMPARISON},
+    {"0<", COMPARISON},
+    {"0>", COMPARISON},
     {NULL, SYMBOL} // add more here
 };
 
