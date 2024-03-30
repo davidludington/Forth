@@ -209,8 +209,8 @@ int less_than(stack_i *stk){
 }
 int greater_than(stack_i *stk){
     int top, next_to_top;
-    int_stack_pop(stk, &top);
-    int_stack_pop(stk, &next_to_top);
+    stack_pop(stk, &top);
+    stack_pop(stk, &next_to_top);
     if(next_to_top > top){
         stack_push(stk, 1);
         return 1;
@@ -221,8 +221,8 @@ int greater_than(stack_i *stk){
 }
 int equal(stack_i *stk){
     int top, next_to_top;
-    int_stack_pop(stk, &top);
-    int_stack_pop(stk, &next_to_top);
+    stack_pop(stk, &top);
+    stack_pop(stk, &next_to_top);
     if(next_to_top == top){
         stack_push(stk, 1);
         return 1;
@@ -234,8 +234,8 @@ int equal(stack_i *stk){
 }
 int not_equal(stack_i *stk){
     int top, next_to_top;
-    int_stack_pop(stk, &top);
-    int_stack_pop(stk, &next_to_top);
+    stack_pop(stk, &top);
+    stack_pop(stk, &next_to_top);
     if(next_to_top != top){
         stack_push(stk, 1);
         return 1;
@@ -247,7 +247,7 @@ int not_equal(stack_i *stk){
 }
 int zero_less_than(stack_i *stk){
     int top;
-    int_stack_pop(stk, &top);
+    stack_pop(stk, &top);
     if(top < 0){
         stack_push(stk, 1);
         return 1;
@@ -259,7 +259,7 @@ int zero_less_than(stack_i *stk){
 }
 int zero_greater_than(stack_i *stk){
     int top;
-    int_stack_pop(stk, &top);
+    stack_pop(stk, &top);
     if(top > 0){
         stack_push(stk, 1);
         return 1;
@@ -270,7 +270,7 @@ int zero_greater_than(stack_i *stk){
 }
 int zero_equal(stack_i *stk){
     int top;
-    int_stack_pop(stk, &top);
+        stack_pop(stk, &top);
     if(top == 0){
         stack_push(stk, 1);
         return 1;
