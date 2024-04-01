@@ -207,6 +207,21 @@ int less_than(stack_i *stk){
         return 0;
     }
 }
+
+int less_that_equal_to(stack_i *stk){
+    int top, next_to_top;
+    stack_pop(stk, &top);
+    stack_pop(stk, &next_to_top);
+    if(next_to_top <= top){
+        stack_push(stk, 1);
+        return 1; //return 1 if true, should we return -1 instead?
+    }else{
+        stack_push(stk, 0);
+        return 0;
+    }
+}
+
+
 int greater_than(stack_i *stk){
     int top, next_to_top;
     stack_pop(stk, &top);
@@ -219,6 +234,20 @@ int greater_than(stack_i *stk){
         return 0;
     }
 }
+
+int greater_that_equal_to(stack_i *stk){
+    int top, next_to_top;
+    stack_pop(stk, &top);
+    stack_pop(stk, &next_to_top);
+    if(next_to_top >= top){
+        stack_push(stk, 1);
+        return 1;
+    }else{
+        stack_push(stk, 0);
+        return 0;
+    }
+}
+
 int equal(stack_i *stk){
     int top, next_to_top;
     stack_pop(stk, &top);

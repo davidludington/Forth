@@ -41,7 +41,9 @@ int two_drop(stack_i *stk);
 
 //comparisons
 int less_than(stack_i *stk);
+int less_that_equal_to(stack_i *stk);
 int greater_than(stack_i *stk);
+int greater_that_equal_to(stack_i *stk);
 int equal(stack_i *stk);
 int not_equal(stack_i *stk);
 int zero_less_than(stack_i *stk);

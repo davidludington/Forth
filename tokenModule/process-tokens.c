@@ -23,11 +23,21 @@ static struct {
     {"2swap", two_swap},
     {"2over", two_over},
     {"2dup", two_dup},
-    {"<", }
+    {"mod", stack_mod},
+    {"/mod", stack_qmod},
+    {"<", less_than},
+    {"<=", less_that_equal_to},
+    {">", greater_than},
+    {">=", greater_that_equal_to},
+    {"=", equal},
+    {"<>", not_equal},
+    {"0<", zero_less_than},
+    {"0>", zero_greater_than},
+    {"0=", zero_equal},
     {NULL, NULL}
 };
 
-void execute_stack_operation(Stack* stack, char* operation) {
+void execute_stack_operation(stack_i* stack, char* operation) {
     for (int i = 0; operations[i].name != NULL; i++) {
         if (strcmp(operation, operations[i].name) == 0) {
             operations[i].func(stack);
