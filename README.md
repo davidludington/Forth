@@ -6,7 +6,11 @@ Welcome to my fourth interpreter!
 ## Installation
 
 ## Build Status
+<<<<<<< HEAD
 [![FORTH](https://github.com/davidludington/Forth/actions/workflows/cmake.yml/badge.svg)]
+=======
+[![FORTH](https://github.com/davidludington/Forth/actions/main/.github/workflows/cmake.yml/badge.svg)](https://github.com/davidludington/Forth/actions/main/.github/workflows/cmake.yml)
+>>>>>>> d9411e2e7ada69ef8915e3f35d5ad937f2c90f07
 
 ### How to add numbers to the stack
 Separate the numbers with a space
