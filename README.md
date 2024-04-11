@@ -5,6 +5,8 @@ Welcome to my fourth interpreter!
 
 ## Installation
 
+## Build Status
+[![FORTH](https://github.com/davidludington/Forth/blob/main/.github/workflows/cmake.yml/badge.svg)](https://github.com/davidludington/Forth/blob/main/.github/workflows/cmake.yml)
 
 ### How to add numbers to the stack
 Separate the numbers with a space
