@@ -11,8 +11,8 @@ const char *COMPARISONS[] = {"<", ">", "<>", "=", "0>", "0<"};
 
 
 // Function to create a token
-struct token_t create_token(enum token_type_t type, const char *text) {
-    struct token_t token;
+token_t create_token(token_type_t type, const char *text) {
+    token_t token;
     token.type = type;
     token.text = strdup(text);  // Duplicate the input text to avoid memory issues
     return token;
@@ -79,7 +79,7 @@ char **splitWords(char *userInput) {
 
 static struct {
     char *word;
-    enum token_type_t type;
+    token_type_t type;
 } tokens[] = {
     {"+", OPERATOR},
     {"-", OPERATOR},
@@ -99,7 +99,7 @@ static struct {
 };
 
 //asignes token an enum 
-struct token_t charecterizeToken(char *token) {
+token_t characterizeToken(char *token) {
 
     for(int i = 0; tokens[i].word != NULL; i++){
          if (strcmp(token, tokens[i].word) == 0) {
@@ -116,29 +116,29 @@ struct token_t charecterizeToken(char *token) {
 }
 
 // takes string of user input and return array of tokens  
-struct token_t *getTokens(char* userInput) {
+token_t* getTokens(char* userInput) {
     char** tokens = splitWords(userInput);
     int arraySize = 0;
-    struct token_t *returnTokens = malloc(sizeof(struct token_t));
+    token_t *returnTokens = malloc(sizeof(token_t));
 
     for (int i = 0; tokens[i] != NULL; i++) {
-        // charecterize the token
-        struct token_t newToken = charecterizeToken(tokens[i]);
+        // characterize the token
+        token_t newToken = characterizeToken(tokens[i]);
         returnTokens[arraySize] = newToken;
         arraySize++;
-        returnTokens = realloc(returnTokens, (arraySize + 1) * sizeof(struct token_t));
+        returnTokens = realloc(returnTokens, (arraySize + 1) * sizeof(token_t));
     }
 
     // add termination token with type -1 after the last token
-    struct token_t terminationToken = { -1, NULL };
-    returnTokens = realloc(returnTokens, (arraySize + 1) * sizeof(struct token_t));
+    token_t terminationToken = { -1, NULL };
+    returnTokens = realloc(returnTokens, (arraySize + 1) * sizeof(token_t));
     returnTokens[arraySize] = terminationToken;
 
     return returnTokens;
 }
 
 //prints tokens to console
-void printTokens(struct token_t *tokens){
+void printTokens(token_t *tokens){
      for (int i = 0; tokens[i].type != -1; i++) {
         printf("Token %d:\n", i);
         printf("  Type: %d\n", tokens[i].type);

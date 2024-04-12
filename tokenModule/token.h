@@ -1,22 +1,25 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 // Enum to represent token types
-enum token_type_t {
+typedef enum {
     NUMBER,
     SYMBOL,
     OPERATOR,
     WORD, 
     COMPARISON
-};
+}token_type_t;
 // Struct to represent a token
-struct token_t {
-    enum token_type_t type;
+typedef struct{
+    token_type_t type;
     char *text;
-};
+}token_t;
 
 
-extern struct token_t *getTokens(char* userInput);
-
-extern void printTokens(struct token_t *tokens);
+extern token_t *getTokens(char* userInput);
+extern token_t charecterizeToken(char *token);
+extern char **splitWords(char *userInput);
+extern token_t characterizeToken(char *token);
+extern token_t* getTokens(char* userInput);
+extern void printTokens(token_t *tokens);
 
 #endif
