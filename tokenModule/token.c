@@ -77,26 +77,6 @@ char **splitWords(char *userInput) {
     return words;
 }
 
-static struct {
-    char *word;
-    token_type_t type;
-} tokens[] = {
-    {"+", OPERATOR},
-    {"-", OPERATOR},
-    {"*", OPERATOR},
-    {"/", OPERATOR},
-    {":", SYMBOL},
-    {";", SYMBOL},
-    {"<", COMPARISON},
-    {"<=", COMPARISON},
-    {"<>", COMPARISON},
-    {">", COMPARISON},
-    {">=", COMPARISON},
-    {"=", COMPARISON},
-    {"0<", COMPARISON},
-    {"0>", COMPARISON},
-    {NULL, SYMBOL} // add more here
-};
 
 //asignes token an enum 
 token_t characterizeToken(char *token) {

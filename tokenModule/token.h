@@ -14,6 +14,27 @@ typedef struct{
     char *text;
 }token_t;
 
+static struct {
+    char *word;
+    token_type_t type;
+} tokens[] = {
+    {"+", OPERATOR},
+    {"-", OPERATOR},
+    {"*", OPERATOR},
+    {"/", OPERATOR},
+    {":", SYMBOL},
+    {";", SYMBOL},
+    {"<", COMPARISON},
+    {"<=", COMPARISON},
+    {"<>", COMPARISON},
+    {">", COMPARISON},
+    {">=", COMPARISON},
+    {"=", COMPARISON},
+    {"0<", COMPARISON},
+    {"0>", COMPARISON},
+    {NULL, SYMBOL} // add more here
+};
+
 
 extern token_t *getTokens(char* userInput);
 extern token_t charecterizeToken(char *token);
