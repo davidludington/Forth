@@ -1,9 +1,17 @@
 # Fourth Interpreter
-Welcome to my fourth interpreter!
+This is an implementation of the Forth programmign language in C
 
 ## About 
 
 ## Installation
+```
+git clone https://github.com/davidludington/Forth.git
+cd FORTH
+cmake -S . -B build 
+cmake --build build 
+./build/bin/main
+```
+
 
 ## Build Status
 [![FORTH](https://github.com/davidludington/Forth/actions/workflows/cmake.yml/badge.svg)]
