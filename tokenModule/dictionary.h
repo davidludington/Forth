@@ -2,20 +2,20 @@
 #define DICTIONARY_H
 #include "token.h"
 
-struct dictionary_item {
+typedef struct{
     char *text; //the word that resembles the operations
     struct token_t *tokens;
-};
+}dictionary_item;
 
-struct dictionary {
-    struct dictionary_item *items; // Array of dictionary items
+typedef struct  {
+    dictionary_item *items; // Array of dictionary items
     int size;                      // Size of the dictionary
-};
+}dictionary;
 
 struct dictionary create_dictionary();
-void add_dictionary_item(struct dictionary dict, const char *text, struct token_t *tokens);
+void add_dictionary_item(dictionary dict, const char *text, token_t *tokens);
 
-struct token_t *get_dictionary_item(struct dictionary dict, const char *text);
+token_t *get_dictionary_item(dictionary dict, const char *text);
 
 
 #endif
