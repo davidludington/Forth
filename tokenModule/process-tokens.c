@@ -7,14 +7,14 @@
 
 
 // add number to stack
-void processNumber(stack_i* stack, struct token_t token){
+void processNumber(stack_i* stack, token_t token){
     int num_int = atoi(token.text);
     // just push number to stack
     stack_push(stack, num_int);
 }
 
 // symbols help add variables
-void processSymbol(stack_i* stack, struct token_t token, int* varDec){
+void processSymbol(stack_i* stack, token_t token, int* varDec){
     if (strcmp(token.text, ":") == 0) {
         // initilize valiable decleration
         *varDec = 1;
@@ -22,7 +22,7 @@ void processSymbol(stack_i* stack, struct token_t token, int* varDec){
 }
 
 // processing words
-void processWord(stack_i* stack, struct token_t token, struct dictionary dict){
+void processWord(stack_i* stack, token_t token, struct dictionary dict){
     if (strcmp(token.text, "dup") == 0) {
         stack_dup(stack);
     } else if (strcmp(token.text, "drop") == 0) {
@@ -46,7 +46,7 @@ void processWord(stack_i* stack, struct token_t token, struct dictionary dict){
     // if none of these are true then check the dictionary
     else {
         //if it is in the dictionary
-        struct token_t *tokens = get_dictionary_item(dict, token.text);
+        token_t *tokens = get_dictionary_item(dict, token.text);
         if (tokens != NULL) {
             // Process the tokens if they are found
             process_to_stack(stack, tokens, dict);
@@ -59,7 +59,7 @@ void processWord(stack_i* stack, struct token_t token, struct dictionary dict){
     // if none there then ?
 }
 // manipulating stack based on operator
-void processOperator(stack_i* stack, struct token_t token) {
+void processOperator(stack_i* stack, token_t token) {
     if (strcmp(token.text, "+") == 0) {
         stack_add(stack);
     } else if (strcmp(token.text, "-") == 0) {
@@ -72,14 +72,14 @@ void processOperator(stack_i* stack, struct token_t token) {
 }
 
 
-void pushValesToVar(struct token_t* varValues, struct token_t token, int* varSize){
+void pushValesToVar(token_t* varValues, token_t token, int* varSize){
     varValues[*varSize] = token; // Dereference varSize to get the integer value
     *varSize = *varSize + 1; // Increment the size after adding the token
-    varValues = realloc(varValues, (*varSize) * sizeof(struct token_t)); // Update the reallocated size
+    varValues = realloc(varValues, (*varSize) * sizeof(token_t)); // Update the reallocated size
 }
 
-void handleVariableDecleration(int* variableDecleration, int* varSize, char* varName, struct token_t token, 
-struct token_t* varValues, struct dictionary dict){
+void handleVariableDecleration(int* variableDecleration, int* varSize, char* varName, token_t token, 
+token_t* varValues, struct dictionary dict){
     //check if it is the first word
     
     if(*varSize == 0){
@@ -100,7 +100,7 @@ struct token_t* varValues, struct dictionary dict){
 }
 
 
-void process_to_stack(stack_i* stack, struct token_t* tokens, struct dictionary dictionary){
+void process_to_stack(stack_i* stack, token_t* tokens, dictionary dictionary){
     
     int numTokens = 0;
 
@@ -109,7 +109,7 @@ void process_to_stack(stack_i* stack, struct token_t* tokens, struct dictionary 
     int varSize = 0;
     char* varName;
 
-    struct token_t* varValues = malloc(sizeof(struct token_t));
+    token_t* varValues = malloc(sizeof(token_t));
 
 
     //cycle through tokens
