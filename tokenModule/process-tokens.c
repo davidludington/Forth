@@ -22,7 +22,7 @@ void processSymbol(stack_i* stack, token_t token, int* varDec){
 }
 
 // processing words
-void processWord(stack_i* stack, token_t token, struct dictionary dict){
+void processWord(stack_i* stack, token_t token, dictionary dict){
     if (strcmp(token.text, "dup") == 0) {
         stack_dup(stack);
     } else if (strcmp(token.text, "drop") == 0) {
@@ -79,7 +79,7 @@ void pushValesToVar(token_t* varValues, token_t token, int* varSize){
 }
 
 void handleVariableDecleration(int* variableDecleration, int* varSize, char* varName, token_t token, 
-token_t* varValues, struct dictionary dict){
+token_t* varValues, dictionary dict){
     //check if it is the first word
     
     if(*varSize == 0){

@@ -12,7 +12,7 @@ typedef struct  {
     int size;                      // Size of the dictionary
 }dictionary;
 
-struct dictionary create_dictionary();
+dictionary create_dictionary();
 void add_dictionary_item(dictionary dict, const char *text, token_t *tokens);
 
 token_t *get_dictionary_item(dictionary dict, const char *text);
