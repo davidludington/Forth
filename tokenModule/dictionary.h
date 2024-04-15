@@ -4,7 +4,7 @@
 
 typedef struct{
     char *text; //the word that resembles the operations
-    struct token_t *tokens;
+    token_t *tokens;
 }dictionary_item;
 
 typedef struct  {
@@ -12,10 +12,10 @@ typedef struct  {
     int size;                      // Size of the dictionary
 }dictionary;
 
-struct dictionary create_dictionary();
-void add_dictionary_item(struct dictionary dict, char *text, token_t *tokens);
+dictionary create_dictionary();
+void add_dictionary_item(dictionary dict, char *text, token_t *tokens);
 
-token_t *get_dictionary_item(struct dictionary dict, char *text);
+token_t *get_dictionary_item(dictionary dict, char *text);
 
 
 #endif

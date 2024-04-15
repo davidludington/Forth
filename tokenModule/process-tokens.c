@@ -101,7 +101,7 @@ token_t* varValues, dictionary dict){
 }
 
 
-void process_to_stack(stack_i* stack, token_t* tokens, struct dictionary dictionary){
+void process_to_stack(stack_i* stack, token_t* tokens, dictionary dictionary){
     
     int numTokens = 0;
 

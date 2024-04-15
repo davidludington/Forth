@@ -12,16 +12,16 @@ dictionary create_dictionary() {
     return dict;
 }
 
-void add_dictionary_item(struct dictionary dict, char *text, token_t *tokens) {
+void add_dictionary_item(dictionary dict, char *text, token_t *tokens) {
     // Reallocate memory for items
-    dict.items = (struct dictionary_item*)realloc(dict.items, (dict.size + 1) * sizeof(dictionary_item));
+    dict.items = (dictionary_item*)realloc(dict.items, (dict.size + 1) * sizeof(dictionary_item));
     // Add the new item
     dict.items[dict.size].text = strdup(text); // Copy the text
     dict.items[dict.size].tokens = tokens;
     dict.size++;
 }
 
-token_t *get_dictionary_item(struct dictionary dict, char *text) {
+token_t *get_dictionary_item(dictionary dict, char *text) {
     // Iterate through the dictionary items to find the matching text
     for (int i = 0; i < dict.size; i++) {
         if (strcmp(dict.items[i].text, text) == 0) {
