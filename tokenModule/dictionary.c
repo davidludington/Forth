@@ -3,18 +3,18 @@
 #include <string.h>
 #include "token.h"
 
-struct dictionary create_dictionary() {
+dictionary create_dictionary() {
     // Allocate memory for the dictionary
-    struct dictionary dict;
+    dictionary dict;
     dict.size = 0; // Start with size 0
-    dict.items = malloc(0 * sizeof(struct dictionary_item)); // Allocate memory for items
+    dict.items = malloc(0 * sizeof(dictionary_item)); // Allocate memory for items
     
     return dict;
 }
 
 void add_dictionary_item(struct dictionary dict, char *text, token_t *tokens) {
     // Reallocate memory for items
-    dict.items = (struct dictionary_item*)realloc(dict.items, (dict.size + 1) * sizeof(struct dictionary_item));
+    dict.items = (struct dictionary_item*)realloc(dict.items, (dict.size + 1) * sizeof(dictionary_item));
     // Add the new item
     dict.items[dict.size].text = strdup(text); // Copy the text
     dict.items[dict.size].tokens = tokens;
