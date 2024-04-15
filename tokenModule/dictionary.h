@@ -4,7 +4,7 @@
 
 struct dictionary_item {
     char *text; //the word that resembles the operations
-    struct token_t *tokens;
+    token_t *tokens;
 };
 
 struct dictionary {
@@ -13,9 +13,9 @@ struct dictionary {
 };
 
 struct dictionary create_dictionary();
-void add_dictionary_item(struct dictionary dict, const char *text, struct token_t *tokens);
+void add_dictionary_item(struct dictionary dict, char *text, token_t *tokens);
 
-struct token_t *get_dictionary_item(struct dictionary dict, const char *text);
+token_t *get_dictionary_item(struct dictionary dict, char *text);
 
 
 #endif

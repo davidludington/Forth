@@ -4,6 +4,7 @@
 #include "stack.h"
 #include "token.h"
 #include "dictionary.h"
+#include "process-tokens.h"
 
 
 // add number to stack
@@ -100,7 +101,7 @@ token_t* varValues, struct dictionary dict){
 }
 
 
-void process_to_stack(stack_i* stack, token_t* tokens, dictionary dictionary){
+void process_to_stack(stack_i* stack, token_t* tokens, struct dictionary dictionary){
     
     int numTokens = 0;
 

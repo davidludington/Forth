@@ -32,7 +32,7 @@ int main(){
         }else{
 
             // divides input into tokens
-            struct token_t* tokens = getTokens(input);
+            token_t* tokens = getTokens(input);
             // manipulates stack based on order of tokens
             process_to_stack(stack, tokens, dictionary);
             // prints out stack after computation

@@ -12,7 +12,7 @@ struct dictionary create_dictionary() {
     return dict;
 }
 
-void add_dictionary_item(struct dictionary dict, const char *text, struct token_t *tokens) {
+void add_dictionary_item(struct dictionary dict, char *text, token_t *tokens) {
     // Reallocate memory for items
     dict.items = (struct dictionary_item*)realloc(dict.items, (dict.size + 1) * sizeof(struct dictionary_item));
     // Add the new item
@@ -21,7 +21,7 @@ void add_dictionary_item(struct dictionary dict, const char *text, struct token_
     dict.size++;
 }
 
-struct token_t *get_dictionary_item(struct dictionary dict, const char *text) {
+token_t *get_dictionary_item(struct dictionary dict, char *text) {
     // Iterate through the dictionary items to find the matching text
     for (int i = 0; i < dict.size; i++) {
         if (strcmp(dict.items[i].text, text) == 0) {
