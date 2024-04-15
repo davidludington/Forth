@@ -4,6 +4,7 @@
 #include "stack.h"
 #include "token.h"
 #include "dictionary.h"
+#include "process-tokens.h"
 
 
 // add number to stack
