@@ -22,11 +22,12 @@ char* getInput() {
 int main(){
 
     stack_i* stack = malloc(sizeof(stack_i));
-    stack_init(stack, 8);
+    stack_init(stack, 20);
     dictionary dictionary = create_dictionary();
+    printf("> ");
     while(1){
         char* input = getInput();
-        if (strcmp(input, "BYE") == 0){ // bye to exit
+        if (strcmp(input, "bye") == 0){ // bye to exit
             free(input);
             break;
         }else{
@@ -36,6 +37,7 @@ int main(){
             // manipulates stack based on order of tokens
             process_to_stack(stack, tokens, dictionary);
             // prints out stack after computation
+           
             stack_print_console(stack);
             free(tokens);
         }

@@ -72,6 +72,16 @@ void processOperator(stack_i* stack, token_t token) {
     }
 }
 
+void processComparison(stack_i* stack, token_t token){
+    if (strcmp(token.text, "=") == 0) equal(stack);
+    else if (strcmp(token.text, "<>") == 0) not_equal(stack);
+    else if (strcmp(token.text, "<") == 0) less_than(stack);
+    else if (strcmp(token.text, ">") == 0) greater_than(stack);
+    else if (strcmp(token.text, "<=") == 0) less_that_equal_to(stack);
+    else if (strcmp(token.text, ">=") == 0) greater_that_equal_to(stack);
+    else if (strcmp(token.text, "0<") == 0) zero_less_than(stack);
+    else if (strcmp(token.text, "0>") == 0) zero_greater_than(stack);
+}
 
 void pushValesToVar(token_t* varValues, token_t token, int* varSize){
     varValues[*varSize] = token; // Dereference varSize to get the integer value
@@ -138,6 +148,10 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary dictionary){
             break;
         case 3: // word
             processWord(stack, tokens[numTokens], dictionary);
+            numTokens++;
+            break;
+        case 4: //comparison 
+            processComparison(stack, tokens[numTokens]);
             numTokens++;
             break;
         default: // default
