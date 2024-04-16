@@ -23,7 +23,7 @@ int main(){
 
     stack_i* stack = malloc(sizeof(stack_i));
     stack_init(stack, 8);
-    dictionary dictionary = create_dictionary();
+    dictionary *dictionary = create_dictionary();
     while(1){
         char* input = getInput();
         if (strcmp(input, "BYE") == 0){ // bye to exit

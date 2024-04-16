@@ -23,7 +23,7 @@ void processSymbol(stack_i* stack, token_t token, int* varDec){
 }
 
 // processing words
-void processWord(stack_i* stack, token_t token, dictionary dict){
+void processWord(stack_i* stack, token_t token, dictionary* dict){
     if (strcmp(token.text, "dup") == 0) {
         stack_dup(stack);
     } else if (strcmp(token.text, "drop") == 0) {
@@ -73,54 +73,19 @@ void processOperator(stack_i* stack, token_t token) {
 }
 
 
-void pushValesToVar(token_t* varValues, token_t token, int* varSize){
-    varValues[*varSize] = token; // Dereference varSize to get the integer value
-    *varSize = *varSize + 1; // Increment the size after adding the token
-    varValues = realloc(varValues, (*varSize) * sizeof(token_t)); // Update the reallocated size
-}
-
-void handleVariableDecleration(int* variableDecleration, int* varSize, char* varName, token_t token, 
-token_t* varValues, dictionary dict){
-    //check if it is the first word
-    
-    if(*varSize == 0){
-        // first word = varName
-        varName = token.text;
-    }else if(strcmp(token.text, ";") == 0){
-        // end the var decleration
-        //add the var to the dictionary
-        add_dictionary_item(dict, varName, varValues);
-        //reset all var helpers
-        *varSize = 0;
-        *variableDecleration = 0;
-        free(varValues);
-    }else{
-        // add tokens that will be part of the var
-        pushValesToVar(varValues, token, varSize);
-    }
-}
-
-
-void process_to_stack(stack_i* stack, token_t* tokens, dictionary dictionary){
+void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
     
     int numTokens = 0;
 
-    // for variable decleration
-    int variableDecleration = 0;
-    int varSize = 0;
-    char* varName;
-
-    token_t* varValues = malloc(sizeof(token_t));
-
+    int dictIsOpen = 0;
 
     //cycle through tokens
     while (tokens[numTokens].text != NULL) {
 
-        
-        if(variableDecleration == 1){ // this token is part of a var decletation
-            handleVariableDecleration(&variableDecleration, &varSize, varName, tokens[numTokens], varValues, dictionary);
+        if(dictIsOpen == 1){ // this token is part of a var decletation
+            push_dictionary(&dictIsOpen, dictionary, tokens[numTokens]);
             numTokens++;
-            break;
+            continue;
         }
         
         switch (tokens[numTokens].type) { // handle token based on token type
@@ -129,7 +94,7 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary dictionary){
             numTokens++;
             break;
         case 1: // symbol
-            processSymbol(stack, tokens[numTokens], &variableDecleration);
+            push_dictionary(&dictIsOpen, dictionary, tokens[numTokens]);
             numTokens++;
             break;
         case 2: // operator
