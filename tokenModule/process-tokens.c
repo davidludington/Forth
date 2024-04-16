@@ -24,26 +24,15 @@ void processSymbol(stack_i* stack, token_t token, int* varDec){
 
 // processing words
 void processWord(stack_i* stack, token_t token, dictionary dict){
-    if (strcmp(token.text, "dup") == 0) {
-        stack_dup(stack);
-    } else if (strcmp(token.text, "drop") == 0) {
-        stack_drop(stack);
-    } else if (strcmp(token.text, "swap") == 0) {
-        stack_swap(stack);
-    } else if (strcmp(token.text, "over") == 0) {
-        stack_over(stack);
-    }else if (strcmp(token.text, "rot") == 0) {
-        stack_rot(stack);
-    }else if (strcmp(token.text, "2drop") == 0) {
-        two_drop(stack);
-    } else if (strcmp(token.text, "2swap") == 0) {
-        two_swap(stack);
-    } else if (strcmp(token.text, "2over") == 0) {
-        two_over(stack);
-    }
-    else if (strcmp(token.text, "2dup") == 0) {
-        two_dup(stack);
-    }
+    if (strcmp(token.text, "dup") == 0) stack_dup(stack);
+    else if (strcmp(token.text, "drop") == 0) stack_drop(stack);
+    else if (strcmp(token.text, "swap") == 0) stack_swap(stack);
+    else if (strcmp(token.text, "over") == 0) stack_over(stack);
+    else if (strcmp(token.text, "rot") == 0) stack_rot(stack);
+    else if (strcmp(token.text, "2drop") == 0) two_drop(stack);
+    else if (strcmp(token.text, "2swap") == 0) two_swap(stack);
+    else if (strcmp(token.text, "2over") == 0) two_over(stack);
+    else if (strcmp(token.text, "2dup") == 0) two_dup(stack);
     // if none of these are true then check the dictionary
     else {
         //if it is in the dictionary
@@ -61,15 +50,11 @@ void processWord(stack_i* stack, token_t token, dictionary dict){
 }
 // manipulating stack based on operator
 void processOperator(stack_i* stack, token_t token) {
-    if (strcmp(token.text, "+") == 0) {
-        stack_add(stack);
-    } else if (strcmp(token.text, "-") == 0) {
-        stack_sub(stack);
-    } else if (strcmp(token.text, "*") == 0) {
-        stack_mult(stack);
-    } else if (strcmp(token.text, "/") == 0) {
-        stack_div(stack);
-    }
+    if (strcmp(token.text, "+") == 0) stack_add(stack);
+    else if (strcmp(token.text, "-") == 0) stack_sub(stack);
+    else if (strcmp(token.text, "*") == 0) stack_mult(stack);
+    else if (strcmp(token.text, "/") == 0) stack_div(stack);
+    else if (strcmp(token.text, ".") == 0) stack_drop(stack);
 }
 
 void processComparison(stack_i* stack, token_t token){
@@ -134,23 +119,23 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary dictionary){
         }
         
         switch (tokens[numTokens].type) { // handle token based on token type
-        case 0: // number
+        case NUMBER: // number
             processNumber(stack, tokens[numTokens]);
             numTokens++;
             break;
-        case 1: // symbol
+        case SYMBOL: // symbol
             processSymbol(stack, tokens[numTokens], &variableDecleration);
             numTokens++;
             break;
-        case 2: // operator
+        case OPERATOR: // operator
             processOperator(stack, tokens[numTokens]);
             numTokens++;
             break;
-        case 3: // word
+        case WORD: // word
             processWord(stack, tokens[numTokens], dictionary);
             numTokens++;
             break;
-        case 4: //comparison 
+        case COMPARISON: //comparison 
             processComparison(stack, tokens[numTokens]);
             numTokens++;
             break;
