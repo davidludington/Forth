@@ -5,13 +5,18 @@
 #include "token.h"
 #include "dictionary.h"
 #include "process-tokens.h"
+#include <ctype.h>
+#include <limits.h>
 
 
-// add number to stack
-void processNumber(stack_i* stack, token_t token){
-    printf("processing number %s", token.text);
-    int num_int = atoi(token.text);
-    // just push number to stack
+
+void processNumber(stack_i* stack, token_t* token) {
+
+    char* endptr;
+    long num_long = strtol(token->text, &endptr, 10); // THE ISSUE IS HERE
+
+    int num_int = (int)num_long;
+    printf("Processing number: %s\n", token->text); // although this prints too
     stack_push(stack, num_int);
 }
 
@@ -52,10 +57,7 @@ void processWord(stack_i* stack, token_t token, dictionary* dict){
         token_t *tokens = retrieve_dict_tokens(dict, token.text);
         if (tokens != NULL) {
             // Process the tokens if they are found
-            printf("processes second time to stack\n");
             process_to_stack(stack, tokens, dict);
-            
-            
         }
         //free(tokens);
     }
@@ -77,11 +79,9 @@ void processOperator(stack_i* stack, token_t token) {
 
 void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
     int numTokens = 0;
-    printf("process to stack running for type: %d\n", tokens[numTokens].type);
     int dictIsOpen = 0;
     //cycle through tokens
     while (tokens[numTokens].text != NULL) {
-
         if(dictIsOpen == 1){ // this token is part of a var decletation
             push_dictionary(&dictIsOpen, dictionary, tokens[numTokens]);
             numTokens++;
@@ -89,7 +89,7 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
         }
         switch (tokens[numTokens].type) { // handle token based on token type
         case 0: // number
-            processNumber(stack, tokens[numTokens]);
+            processNumber(stack, &tokens[numTokens]);
             numTokens++;
             break;
         case 1: // symbol
@@ -101,7 +101,6 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
             numTokens++;
             break;
         case 3: // word
-            printf("processiing a word\n");
             processWord(stack, tokens[numTokens], dictionary);
             numTokens++;
             break;

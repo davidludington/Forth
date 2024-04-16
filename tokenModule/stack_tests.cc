@@ -189,7 +189,6 @@ TEST(Tokens, Dictionary){
     process_to_stack(&stack, thirdTokens, dictionary); 
 
 
-
     entry_t* entry;
     int pos = 0; 
     SLIST_FOREACH(entry, &stack.head, entries) {
@@ -198,14 +197,8 @@ TEST(Tokens, Dictionary){
         }
         pos++; // Increment pos
     }
-  
     free(tokens);
 }
-
-
-
-
-
 
 int main(int argc, char **argv)
 {
