@@ -170,13 +170,12 @@ TEST(Tokens, TokenProcessing){
     free(tokens);
 }
 
-/*
-TEST(Tokens, Variables){
+
+TEST(Tokens, Dictionary){
     const char* input = "100"; // Use const char* instead of char*
     stack_i stack;
     stack_init(&stack, 8);
-    dictionary dictionary;
-    dictionary = create_dictionary();
+    dictionary *dictionary = create_dictionary();
     // apparently I need to do this for c compatibility
     token_t* tokens = getTokens(const_cast<char*>(input));
     process_to_stack(&stack, tokens, dictionary); 
@@ -202,8 +201,6 @@ TEST(Tokens, Variables){
   
     free(tokens);
 }
-
-*/
 
 
 

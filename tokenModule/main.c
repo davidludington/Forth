@@ -26,6 +26,7 @@ int main(){
     dictionary *dictionary = create_dictionary();
     while(1){
         char* input = getInput();
+        
         if (strcmp(input, "BYE") == 0){ // bye to exit
             free(input);
             break;
@@ -41,6 +42,7 @@ int main(){
         }
     }
     free(stack);
+    free(dictionary);
 }
 
 

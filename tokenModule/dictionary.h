@@ -17,10 +17,8 @@ typedef struct  {
 dictionary *create_dictionary();
 void add_dictionary_item(dictionary dict, char *text, token_t *tokens);
 
-token_t *get_dictionary_item(dictionary *dict, char *text);
-
 void push_dictionary(int *isDictionaryOpen, dictionary *dictionary, token_t token);
-
+token_t* retrieve_dict_tokens(dictionary *dict, char *word);
 void print_dictionary_words(dictionary *dict);
 
 

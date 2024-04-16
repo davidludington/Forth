@@ -9,6 +9,7 @@
 
 // add number to stack
 void processNumber(stack_i* stack, token_t token){
+    printf("processing number %s", token.text);
     int num_int = atoi(token.text);
     // just push number to stack
     stack_push(stack, num_int);
@@ -47,15 +48,16 @@ void processWord(stack_i* stack, token_t token, dictionary* dict){
     // if none of these are true then check the dictionary
     else {
         //if it is in the dictionary
-        token_t *tokens = get_dictionary_item(dict, token.text);
+        
+        token_t *tokens = retrieve_dict_tokens(dict, token.text);
         if (tokens != NULL) {
             // Process the tokens if they are found
+            printf("processes second time to stack\n");
             process_to_stack(stack, tokens, dict);
-        } else {
-            // Handle the case when the text is not found in the dictionary
-            // no variable by that name
+            
+            
         }
-
+        //free(tokens);
     }
     // if none there then ?
 }
@@ -74,11 +76,9 @@ void processOperator(stack_i* stack, token_t token) {
 
 
 void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
-    
     int numTokens = 0;
-
+    printf("process to stack running for type: %d\n", tokens[numTokens].type);
     int dictIsOpen = 0;
-
     //cycle through tokens
     while (tokens[numTokens].text != NULL) {
 
@@ -87,7 +87,6 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
             numTokens++;
             continue;
         }
-        
         switch (tokens[numTokens].type) { // handle token based on token type
         case 0: // number
             processNumber(stack, tokens[numTokens]);
@@ -102,6 +101,7 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
             numTokens++;
             break;
         case 3: // word
+            printf("processiing a word\n");
             processWord(stack, tokens[numTokens], dictionary);
             numTokens++;
             break;
