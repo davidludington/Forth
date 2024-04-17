@@ -1,4 +1,5 @@
 FetchContent_MakeAvailable(googletest)
+set(CMAKE_BUILD_TYPE Debug)
 
 enable_testing()
 
@@ -17,6 +18,8 @@ add_executable(
   dictionary.c
   process-tokens.c
 )
+
+set(CMAKE_C_FLAGS_DEBUG "-g")
 
 target_link_libraries(
   stack_tests

@@ -23,15 +23,14 @@ int main(){
 
     stack_i* stack = malloc(sizeof(stack_i));
     stack_init(stack, 20);
-    dictionary dictionary = create_dictionary();
-    printf("> ");
+    dictionary *dictionary = create_dictionary();
+
     while(1){
         char* input = getInput();
         if (strcmp(input, "bye") == 0){ // bye to exit
             free(input);
             break;
         }else{
-
             // divides input into tokens
             token_t* tokens = getTokens(input);
             // manipulates stack based on order of tokens
@@ -43,6 +42,7 @@ int main(){
         }
     }
     free(stack);
+    free(dictionary);
 }
 
 
