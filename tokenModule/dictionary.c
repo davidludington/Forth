@@ -21,29 +21,25 @@ dictionary *create_dictionary() {
     return dictPtr;
 }
 
-void push_token_to_dict(dictionary *dict, token_t token) {
-dictionary_item *item = &dict->items[dict->size - 1]; 
+void push_token_to_dict(dictionary *dict, token_t *token) {
+dictionary_item *item = &dict->items[dict->size - 1]; // am i not doing this right?
 if (item->size == 0) {
-    // Allocate memory for one token if tokens array is empty
+    // Allocate memory for a new token with allocated text
+  // Allocate memory for one token if tokens array is empty
     item->tokens = (token_t *)malloc(sizeof(token_t));
-    if (item->tokens == NULL) {
-        // Memory allocation failed, handle error
-        fprintf(stderr, "Error: Failed to allocate memory for tokens\n");
-        return;
-    }
-    item->tokens[0] = token;
-    item->size = 1; // Update size to 1
-} else {
-    // Reallocate memory for tokens array to add one more token
-    int currentSize = item->size;
-    item->tokens = (token_t *)realloc(item->tokens, (currentSize + 1) * sizeof(token_t));
-    if (item->tokens == NULL) {
-        // Memory reallocation failed, handle error
-        fprintf(stderr, "Error: Failed to reallocate memory for tokens\n");
-        return;
-    }
-    item->tokens[currentSize] = token; // Use currentSize for indexing
-    item->size++; // Increment size after adding a token
+    item->tokens[0].text = (char *)malloc(strlen(token->text)+ 1); 
+    strcpy(item->tokens[0].text, token->text);
+    item->tokens[0].type = token->type;
+    item->tokens[item->size + 1].text = NULL;
+    item->size = 1;
+    } else {
+    // Reallocate the tokens array to make space for the new token
+    item->tokens = (token_t *)realloc(item->tokens, (item->size + 1) * sizeof(token_t));
+    item->tokens[item->size].text = (char *)realloc(strlen(token->text) + 1);
+    strcpy(item->tokens[item->size].text, token->text);
+    item->tokens[item->size].type = token->type;
+    item->tokens[item->size + 1].text = NULL;
+    item->size++;
 }
 }
 
@@ -57,6 +53,7 @@ void print_dictionary_words(dictionary *dict) {
         dictionary_item *item = &dict->items[i];
         if (item != NULL && item->tokens != NULL && item->size > 0) {
             printf("%s\n", item->text); // Print the word associated with the dictionary item
+
         }
     }
 }
@@ -98,6 +95,6 @@ void push_dictionary(int *isDictionaryOpen, dictionary *dictionary, token_t toke
         add_dictionary_instance(dictionary, token.text);
     }else{
         // add token to recent entry
-        push_token_to_dict(dictionary, token);
+        push_token_to_dict(dictionary, &token);
     }
 }
