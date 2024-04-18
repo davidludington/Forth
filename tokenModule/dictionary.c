@@ -35,7 +35,7 @@ if (item->size == 0) {
     } else {
     // Reallocate the tokens array to make space for the new token
     item->tokens = (token_t *)realloc(item->tokens, (item->size + 1) * sizeof(token_t));
-    item->tokens[item->size].text = (char *)realloc(strlen(token->text) + 1);
+    item->tokens[item->size].text = (char *)malloc(strlen(token->text) + 1);
     strcpy(item->tokens[item->size].text, token->text);
     item->tokens[item->size].type = token->type;
     item->tokens[item->size + 1].text = NULL;
