@@ -22,10 +22,9 @@ dictionary *create_dictionary() {
 }
 
 void push_token_to_dict(dictionary *dict, token_t *token) {
-dictionary_item *item = &dict->items[dict->size - 1]; // am i not doing this right?
+dictionary_item *item = &dict->items[dict->size - 1];
 if (item->size == 0) {
     // Allocate memory for a new token with allocated text
-  // Allocate memory for one token if tokens array is empty
     item->tokens = (token_t *)malloc(sizeof(token_t));
     item->tokens[0].text = (char *)malloc(strlen(token->text)+ 1); 
     strcpy(item->tokens[0].text, token->text);
@@ -34,7 +33,8 @@ if (item->size == 0) {
     item->size = 1;
     } else {
     // Reallocate the tokens array to make space for the new token
-    item->tokens = (token_t *)realloc(item->tokens, (item->size + 1) * sizeof(token_t));
+    //token_t *temp = (token_t *)realloc(item->tokens, (item->size + 1) * sizeof(token_t));
+    //item->tokens = temp;
     item->tokens[item->size].text = (char *)malloc(strlen(token->text) + 1);
     strcpy(item->tokens[item->size].text, token->text);
     item->tokens[item->size].type = token->type;
