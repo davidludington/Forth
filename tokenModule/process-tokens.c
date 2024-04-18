@@ -29,7 +29,7 @@ void processSymbol(stack_i* stack, token_t token, int* varDec){
 }
 
 // processing words
-void processWord(stack_i* stack, token_t token, dictionary dict){
+void processWord(stack_i* stack, token_t token, dictionary* dict){
     if (strcmp(token.text, "dup") == 0) stack_dup(stack);
     else if (strcmp(token.text, "drop") == 0) stack_drop(stack);
     else if (strcmp(token.text, "swap") == 0) stack_swap(stack);
