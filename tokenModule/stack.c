@@ -333,9 +333,10 @@ void stack_print_console(stack_i *stk) {
     SLIST_FOREACH(entry, &stk->head, entries) {
         values[i++] = entry->value;
     }
-
+     printf("> ");
     // Print stack elements in reverse order
     for (i = stk->size - 1; i >= 0; i--) {
+        
         printf("%d ", values[i]);
     }
     printf("<- Top\n");

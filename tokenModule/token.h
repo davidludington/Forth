@@ -22,6 +22,7 @@ static struct {
     {"-", OPERATOR},
     {"*", OPERATOR},
     {"/", OPERATOR},
+    {".", OPERATOR},
     {":", SYMBOL},
     {";", SYMBOL},
     {"<", COMPARISON},

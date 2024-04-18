@@ -5,7 +5,7 @@
 #include "token.h"
 
 //add more if you see fit
-const char *OPERATORS[] = {"+", "-", "*", "/"};
+const char *OPERATORS[] = {"+", "-", "*", "/", "."};
 const char *SYMBOLS[] = {":", ";"};
 const char *COMPARISONS[] = {"<", ">", "<>", "=", "0>", "0<"};
 
