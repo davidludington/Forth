@@ -14,7 +14,7 @@ cmake --build build
 
 
 ## Build Status
-[![FORTH](https://github.com/davidludington/Forth/actions/workflows/cmake.yml/badge.svg)]
+![FORTH](https://github.com/davidludington/Forth/actions/workflows/cmake.yml/badge.svg)
 
 ### How to add numbers to the stack
 Separate the numbers with a space

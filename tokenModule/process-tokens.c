@@ -13,10 +13,7 @@
 void processNumber(stack_i* stack, token_t* token) {
 
     char* endptr;
-    long num_long = strtol(token->text, &endptr, 10); // THE ISSUE IS HERE
-
-    int num_int = (int)num_long;
-    printf("Processing number: %s\n", token->text); // although this prints too
+    long num_int = atoi(token->text); // THE ISSUE IS HERE
     stack_push(stack, num_int);
 }
 
@@ -108,4 +105,5 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
             break;
     }
     }
+    numTokens = 0;
 }
