@@ -101,6 +101,10 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
             processComparison(stack, tokens[numTokens]);
             numTokens++;
             break;
+        case CONDITIONAL: //comparison 
+            processComparison(stack, tokens[numTokens]);
+            numTokens++;
+            break;
         default: // default
             break;
     }

@@ -6,7 +6,8 @@ typedef enum {
     SYMBOL,
     OPERATOR,
     WORD, 
-    COMPARISON
+    COMPARISON, 
+    CONDITIONAL
 }token_type_t;
 // Struct to represent a token
 typedef struct{
@@ -33,6 +34,9 @@ static struct {
     {"=", COMPARISON},
     {"0<", COMPARISON},
     {"0>", COMPARISON},
+    {"IF", CONDITIONAL},
+    {"ELSE", CONDITIONAL},
+    {"THEN", CONDITIONAL},
     {NULL, SYMBOL} // add more here
 };
 

@@ -200,8 +200,8 @@ int less_than(stack_i *stk){
     stack_pop(stk, &top);
     stack_pop(stk, &next_to_top);
     if(next_to_top < top){
-        stack_push(stk, 1);
-        return 1; //return 1 if true, should we return -1 instead?
+        stack_push(stk, -1);
+        return -1; //return -1 if true, should we return -1 instead?
     }else{
         stack_push(stk, 0);
         return 0;
@@ -213,8 +213,8 @@ int less_that_equal_to(stack_i *stk){
     stack_pop(stk, &top);
     stack_pop(stk, &next_to_top);
     if(next_to_top <= top){
-        stack_push(stk, 1);
-        return 1; //return 1 if true, should we return -1 instead?
+        stack_push(stk, -1);
+        return -1; //return -1 if true, should we return -1 instead?
     }else{
         stack_push(stk, 0);
         return 0;
@@ -227,8 +227,8 @@ int greater_than(stack_i *stk){
     stack_pop(stk, &top);
     stack_pop(stk, &next_to_top);
     if(next_to_top > top){
-        stack_push(stk, 1);
-        return 1;
+        stack_push(stk, -1);
+        return -1;
     }else{
         stack_push(stk, 0);
         return 0;
@@ -240,8 +240,8 @@ int greater_that_equal_to(stack_i *stk){
     stack_pop(stk, &top);
     stack_pop(stk, &next_to_top);
     if(next_to_top >= top){
-        stack_push(stk, 1);
-        return 1;
+        stack_push(stk, -1);
+        return -1;
     }else{
         stack_push(stk, 0);
         return 0;
@@ -253,8 +253,8 @@ int equal(stack_i *stk){
     stack_pop(stk, &top);
     stack_pop(stk, &next_to_top);
     if(next_to_top == top){
-        stack_push(stk, 1);
-        return 1;
+        stack_push(stk, -1);
+        return -1;
     }else{
         stack_push(stk, 0);
         return 0;
@@ -266,8 +266,8 @@ int not_equal(stack_i *stk){
     stack_pop(stk, &top);
     stack_pop(stk, &next_to_top);
     if(next_to_top != top){
-        stack_push(stk, 1);
-        return 1;
+        stack_push(stk, -1);
+        return -1;
     }else{
         stack_push(stk, 0);
         return 0;
@@ -278,8 +278,8 @@ int zero_less_than(stack_i *stk){
     int top;
     stack_pop(stk, &top);
     if(top < 0){
-        stack_push(stk, 1);
-        return 1;
+        stack_push(stk, -1);
+        return -1;
     }else{
         stack_push(stk, 0);
         return 0;
@@ -290,8 +290,8 @@ int zero_greater_than(stack_i *stk){
     int top;
     stack_pop(stk, &top);
     if(top > 0){
-        stack_push(stk, 1);
-        return 1;
+        stack_push(stk, -1);
+        return -1;
     }else{
         stack_push(stk, 0);
         return 0;
@@ -301,8 +301,8 @@ int zero_equal(stack_i *stk){
     int top;
         stack_pop(stk, &top);
     if(top == 0){
-        stack_push(stk, 1);
-        return 1;
+        stack_push(stk, -1);
+        return -1;
     }else{
         stack_push(stk, 0);
         return 0;
