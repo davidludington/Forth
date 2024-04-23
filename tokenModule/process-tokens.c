@@ -44,10 +44,14 @@ void processWord(stack_i* stack, token_t token, dictionary* dict){
         if (tokens != NULL) {
             // Process the tokens if they are found
             process_to_stack(stack, tokens, dict);
+        } else{
+            //if the token does not exist in the dictionary print the word with a question mark
+            printf("%s ? \n", token.text);
         }
         //free(tokens);
     }
     // if none there then ?
+    
 }
 // manipulating stack based on operator
 void processOperator(stack_i* stack, token_t token) {
