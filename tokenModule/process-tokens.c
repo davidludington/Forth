@@ -70,14 +70,11 @@ void processComparison(stack_i* stack, token_t token){
 }
 
 void processConditional(stack_i* stack, token_t token){
-    if (strcmp(token.text, "IF") == 0) if_statement(stack);
+    //if (strcmp(token.text, "IF") == 0) if_statement(stack);
     //else if (strcmp(token.text, "ELSE") == 0) else_statement(stack);
     //else if (strcmp(token.text, "THEN") == 0) then_statement(stack);
 }
 
-void if_statement(stack_i *stk){
-    
-}
 
 void parseif(stack_i *stk, token_t* tokens, int current_position){
     int numTokens = current_position + 1;
@@ -154,7 +151,7 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
             numTokens++;
             break;
         case CONDITIONAL: //comparison 
-            processConditional(stack, tokens[numTokens]);
+            //processConditional(stack, tokens[numTokens]);
             numTokens++;
             break;
         default: // default
