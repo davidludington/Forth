@@ -117,14 +117,90 @@ void pasrseif(stack_i *stk){
 }
 */
 
+void initiateLoop(int* starting_ending, int* isInLoop, stack_i* stack, int* tokenAmount){
+    int top_value, next_to_top_value;
+    stack_pop(stack, &top_value);
+    stack_pop(stack, &next_to_top_value);
+    //set the array of staring and ending
+    starting_ending[0] = top_value;
+    starting_ending[1] = next_to_top_value;
+    
+    //begin loop
+    *isInLoop = 1;
+    *tokenAmount = 0;
+
+}
+
+void pushTokenToLoop(token_t** loopTokens, int* tokenAmount, token_t newToken) {
+    // Allocate memory for one more token
+    *loopTokens = (token_t*)realloc(*loopTokens, (*tokenAmount + 1) * sizeof(token_t));
+
+    // Copy the new token to the last position in the array
+    (*loopTokens)[*tokenAmount] = newToken;
+
+    // Increment the tokenAmount
+    (*tokenAmount)++;
+}
+
+token_t* cleanUpI(const token_t* loopTokens, int tokenAmount, int currentIteration) {
+    const char* targetText = "i";
+
+    // Allocate memory for the new array of tokens
+    token_t* newTokens = (token_t*)malloc(tokenAmount * sizeof(token_t));
+
+    // Copy each token from the original array to the new array and modify as needed
+    for (int i = 0; i < tokenAmount; i++) {
+        // Allocate memory for the text field in the new token
+        newTokens[i].text = (char*)malloc((strlen(loopTokens[i].text) + 1) * sizeof(char));
+        strcpy(newTokens[i].text, loopTokens[i].text); // Copy the text field
+        newTokens[i].type = loopTokens[i].type; // Copy the type field
+        if (strcmp(loopTokens[i].text, targetText) == 0) {
+            snprintf(newTokens[i].text, strlen(loopTokens[i].text) + 1, "%d", currentIteration);
+            newTokens[i].type = NUMBER; // Assign NUMBER type to tokens where text matches "i"
+        }
+    }
+
+    return newTokens;  // Return the new array
+}
+
+
+void runLoop(int* starting_ending, int* isInLoop, stack_i* stack, token_t* loopTokens, int tokenAmount, dictionary *dictionary){
+
+    for(int i = starting_ending[0]; i < starting_ending[1]; i++){
+        //the loop
+        token_t* cleanedTokens = cleanUpI(loopTokens, tokenAmount, i);
+        cleanedTokens[tokenAmount].text = NULL;
+        process_to_stack(stack, cleanedTokens, dictionary);
+        free(cleanedTokens);
+    }
+    *isInLoop = 0;
+}
+
+
+
 
 void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
+    
     int numTokens = 0;
-    int dictIsOpen = 0;
+    
+    int dictIsOpen = 0; // for dictionary use
+    
+    //for loop use
+    int isInLoop = 0; 
+    int starting_ending[2];
+    token_t* loopTokens;
+    int tokenAmount = 0;
+
     //cycle through tokens
     while (tokens[numTokens].text != NULL) {
         if(dictIsOpen == 1){ // this token is part of a var decletation
             push_dictionary(&dictIsOpen, dictionary, tokens[numTokens]);
+            numTokens++;
+            continue;
+        }
+        if(isInLoop == 1 && strcmp(tokens[numTokens].text, "loop") != 0){ // this token is part of a var decletation
+            // push to the loopTokens
+            pushTokenToLoop(&loopTokens, &tokenAmount, tokens[numTokens]);
             numTokens++;
             continue;
         }
@@ -143,7 +219,9 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
             numTokens++;
             break;
         case WORD: // word
-            processWord(stack, tokens[numTokens], dictionary);
+            if(strcmp(tokens[numTokens].text, "do") == 0) initiateLoop(starting_ending, &isInLoop, stack, &tokenAmount); // start loop
+            else if (strcmp(tokens[numTokens].text, "loop") == 0) runLoop(starting_ending, &isInLoop, stack, loopTokens, tokenAmount, dictionary);
+            else processWord(stack, tokens[numTokens], dictionary);
             numTokens++;
             break;
         case COMPARISON: //comparison 
