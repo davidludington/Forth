@@ -309,6 +309,14 @@ int zero_equal(stack_i *stk){
     }
 }
 
+void if_statement(stack_i *stk){
+    int top;
+    stack_pop(stk, &top);
+    if(top == 0){
+        stack_push(stk, 0);
+    }
+}
+
 
 
 void stack_print(stack_i *stk, FILE *file) {

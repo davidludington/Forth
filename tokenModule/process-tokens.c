@@ -69,6 +69,58 @@ void processComparison(stack_i* stack, token_t token){
     else if (strcmp(token.text, "0>") == 0) zero_greater_than(stack);
 }
 
+void processConditional(stack_i* stack, token_t token){
+    if (strcmp(token.text, "IF") == 0) if_statement(stack);
+    //else if (strcmp(token.text, "ELSE") == 0) else_statement(stack);
+    //else if (strcmp(token.text, "THEN") == 0) then_statement(stack);
+}
+
+void if_statement(stack_i *stk){
+    
+}
+
+void parseif(stack_i *stk, token_t* tokens, int current_position){
+    int numTokens = current_position + 1;
+    while (tokens[numTokens].text != NULL) {
+        if (tokens[numTokens].type == CONDITIONAL) {
+            parseif(stk, tokens, numTokens);
+        }
+        if (strcmp(tokens[numTokens].text, "ELSE") == 0) {
+            while (strcmp(tokens[numTokens].text, "THEN") != 0) {
+                numTokens++;
+                if (tokens[numTokens].text == NULL) {
+                    // Syntax error: Unexpected end of input
+                    return;
+                }
+            }
+        }
+        if (strcmp(tokens[numTokens].text, "THEN") == 0) {
+            return;
+        }
+        numTokens++;
+    }
+}
+/*
+void pasrseif(stack_i *stk){
+    token_t token;
+    stack_pop(stk, &token);
+    if(token.type == CONDITIONAL){
+        if(strcmp(token.text, "IF") == 0){
+            token_t token2;
+            token_t *tokenArray;
+            stack_pop(stk, &token2);
+            while(token2.type != CONDITIONAL){
+
+                stack_pop(stk, &token2);
+            }
+            pasrseif(stk);
+        }
+
+    }
+}
+*/
+
+
 void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
     int numTokens = 0;
     int dictIsOpen = 0;
@@ -102,7 +154,7 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
             numTokens++;
             break;
         case CONDITIONAL: //comparison 
-            processComparison(stack, tokens[numTokens]);
+            processConditional(stack, tokens[numTokens]);
             numTokens++;
             break;
         default: // default
