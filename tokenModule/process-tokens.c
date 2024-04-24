@@ -80,36 +80,45 @@ void processConditional(stack_i* stack, token_t token){
 }
 
 
-void parseif(stack_i *stk, token_t* tokens, int current_position, dictionary *dict){
+void parseif(stack_i *stk, token_t* tokens, int *current_position, dictionary *dict){
     //: is-it-zero?  0 = if ." Yes!" else ." No!" then ;
-    //condition comes before if statement and pushes 1 or 0 onto stack 
+    //condition comes before if statement and pushes -1 or 0 onto stack 
     int condition;
     stack_pop(stk, &condition);
 
     if(condition != 0){ //condition is true 
-        while (tokens[current_position].text != NULL || tokens[current_position].text != "then"){
+        while (tokens[*current_position].text != NULL || strcmp(tokens[*current_position].text, "then") == 0){ //iterate over stack hel
             
-            if(tokens[current_position].type != CONDITIONAL){
+            if(tokens[*current_position].type != CONDITIONAL){
                 process_to_stack(stk, tokens, dict);
-                current_position++;
+                (*current_position)++;
             }else{
                 parseif(stk, tokens, current_position, dict);
             }
             
         }
-    } else { //condition is false, must iterate until "else" keyword then process to stack until we reach then
-        while(tokens[current_position].text != "else" || tokens[current_position].text != "then"){
-            current_position++;
-            if(tokens[current_position].type == CONDITIONAL){
+    } else { //condition is false ie 0, must iterate until "else" keyword then process to stack until we reach then
+        while(strcmp(tokens[*current_position].text, "else") != 0 || strcmp(tokens[*current_position].text, "then") != 0){
+            (*current_position)++;
+            printf("%s\n", tokens[*current_position].text);
+            if((strcmp(tokens[*current_position].text, "if") == 0) || (strcmp(tokens[*current_position].text, "else") == 0) || (strcmp(tokens[*current_position].text, "then") == 0)){
                 parseif(stk, tokens, current_position, dict);
             }
         }
 
-        while (tokens[current_position].text != NULL || tokens[current_position].text != "then"){
+        while (tokens[*current_position].text != NULL || strcmp(tokens[*current_position].text, "then") == 0){
             process_to_stack(stk, tokens, dict);
         }
     }
-    /*
+    
+}
+
+
+
+/*
+pop token off stack if it is -1 then process until you find another keyword(do, if, else)
+if it is 0 skip over tokens until you find else and process until yuo get to then
+/*
     int numTokens = current_position + 1;
     while (tokens[numTokens].text != NULL) {
         if (tokens[numTokens].type == CONDITIONAL) {
@@ -130,12 +139,6 @@ void parseif(stack_i *stk, token_t* tokens, int current_position, dictionary *di
         numTokens++;
     }
     */
-}
-
-/*
-pop token off stack if it is -1 then process until you find another keyword(do, if, else)
-if it is 0 skip over tokens until you find else and process until yuo get to then
-
 
 /*
 void pasrseif(stack_i *stk){
@@ -269,7 +272,7 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
             numTokens++;
             break;
         case CONDITIONAL: //comparison 
-            parseif(stack, tokens, numTokens, dictionary);
+            parseif(stack, tokens, &numTokens, dictionary);
             numTokens++;
             break;
         default: // default
