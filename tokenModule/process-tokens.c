@@ -80,7 +80,36 @@ void processConditional(stack_i* stack, token_t token){
 }
 
 
-void parseif(stack_i *stk, token_t* tokens, int current_position){
+void parseif(stack_i *stk, token_t* tokens, int current_position, dictionary *dict){
+    //: is-it-zero?  0 = if ." Yes!" else ." No!" then ;
+    //condition comes before if statement and pushes 1 or 0 onto stack 
+    int condition;
+    stack_pop(stk, &condition);
+
+    if(condition != 0){ //condition is true 
+        while (tokens[current_position].text != NULL || tokens[current_position].text != "then"){
+            
+            if(tokens[current_position].type != CONDITIONAL){
+                process_to_stack(stk, tokens, dict);
+                current_position++;
+            }else{
+                parseif(stk, tokens, current_position, dict);
+            }
+            
+        }
+    } else { //condition is false, must iterate until "else" keyword then process to stack until we reach then
+        while(tokens[current_position].text != "else" || tokens[current_position].text != "then"){
+            current_position++;
+            if(tokens[current_position].type == CONDITIONAL){
+                parseif(stk, tokens, current_position, dict);
+            }
+        }
+
+        while (tokens[current_position].text != NULL || tokens[current_position].text != "then"){
+            process_to_stack(stk, tokens, dict);
+        }
+    }
+    /*
     int numTokens = current_position + 1;
     while (tokens[numTokens].text != NULL) {
         if (tokens[numTokens].type == CONDITIONAL) {
@@ -100,7 +129,14 @@ void parseif(stack_i *stk, token_t* tokens, int current_position){
         }
         numTokens++;
     }
+    */
 }
+
+/*
+pop token off stack if it is -1 then process until you find another keyword(do, if, else)
+if it is 0 skip over tokens until you find else and process until yuo get to then
+
+
 /*
 void pasrseif(stack_i *stk){
     token_t token;
@@ -233,7 +269,7 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
             numTokens++;
             break;
         case CONDITIONAL: //comparison 
-            //processConditional(stack, tokens[numTokens]);
+            parseif(stack, tokens, numTokens, dictionary);
             numTokens++;
             break;
         default: // default

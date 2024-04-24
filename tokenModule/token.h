@@ -34,9 +34,9 @@ static struct {
     {"=", COMPARISON},
     {"0<", COMPARISON},
     {"0>", COMPARISON},
-    {"IF", CONDITIONAL},
-    {"ELSE", CONDITIONAL},
-    {"THEN", CONDITIONAL},
+    {"if", CONDITIONAL},
+    {"else", CONDITIONAL},
+    {"then", CONDITIONAL},
     {NULL, SYMBOL} // add more here
 };
 
