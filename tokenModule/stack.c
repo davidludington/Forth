@@ -83,7 +83,7 @@ int stack_sub(stack_i *stk){
     int top_value, next_to_top_value;
     stack_pop(stk, &top_value);
     stack_pop(stk, &next_to_top_value);
-    return stack_push(stk, top_value - next_to_top_value);
+    return stack_push(stk,  next_to_top_value - top_value);
 }
 int stack_mult(stack_i *stk){
     if (stk->size < 2)

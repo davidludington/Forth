@@ -46,7 +46,7 @@ TEST(StackTest, SimpleOperations)
     int sub_result;
     stack_sub(&stack);
     stack_pop(&stack, &sub_result);
-    ASSERT_EQ(sub_result, 2);
+    ASSERT_EQ(sub_result, -2);
     //divide
     stack_push(&stack, 4);
     stack_push(&stack, 2);
