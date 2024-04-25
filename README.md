@@ -3,7 +3,7 @@ This is an implementation of the Forth programmign language in C
 
 ## About 
 
-## Installation
+## Installation and Run 
 ```
 git clone https://github.com/davidludington/Forth.git
 cd FORTH
