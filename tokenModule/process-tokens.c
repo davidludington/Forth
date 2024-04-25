@@ -79,6 +79,12 @@ void processConditional(stack_i* stack, token_t token){
     //else if (strcmp(token.text, "THEN") == 0) then_statement(stack);
 }
 
+token_t* advanceToCurrentToken(token_t* tokens, int* current_position){
+    token_t* current_token = &tokens[*current_position];
+    (*current_position)++;
+    return current_token;
+}
+
 
 void parseif(stack_i *stk, token_t* tokens, int *current_position, dictionary *dict){
     //: is-it-zero?  0 = if ." Yes!" else ." No!" then ;
@@ -102,7 +108,7 @@ void parseif(stack_i *stk, token_t* tokens, int *current_position, dictionary *d
             (*current_position)++;
             printf("%s\n", tokens[*current_position].text);
             if(tokens[*current_position].type != CONDITIONAL){
-                process_to_stack(stk, tokens, dict); //I think it is passing in all the tokens again from the parameter so it restarts the call from the begining of the statement 
+                process_to_stack(stk, advanceToCurrentToken(tokens, current_position), dict); //I think it is passing in all the tokens again from the parameter so it restarts the call from the begining of the statement 
                 (*current_position)++;
             }else{
                 parseif(stk, tokens, current_position, dict);
@@ -119,7 +125,7 @@ void parseif(stack_i *stk, token_t* tokens, int *current_position, dictionary *d
         }
 
         while (tokens[*current_position].text != NULL || strcmp(tokens[*current_position].text, "then") == 0){
-            process_to_stack(stk, tokens, dict);
+            process_to_stack(stk, advanceToCurrentToken(tokens, current_position), dict);
         }
     }
     
