@@ -83,12 +83,67 @@ void processConditional(stack_i* stack, token_t token){
 void parseif(stack_i *stk, token_t* tokens, int *current_position, dictionary *dict){
     //: is-it-zero?  0 = if ." Yes!" else ." No!" then ;
     //condition comes before if statement and pushes -1 or 0 onto stack 
+    // : zero? 0 = if -1 else 0 then ;
+    if(strcmp(tokens[*current_position].text, "then") == 0){ //base case 
+        return;
+    }
     int condition;
-    stack_pop(stk, &condition);
+    printf("%s\n", tokens[*current_position].text);
+    stack_print_console(stk);
+    if(strcmp(tokens[*current_position].text, "if") == 0){ // need to make sure that the conditon is only applied for the first recursive call
+        stack_pop(stk, &condition);
+    }
+    printf("%s\n", tokens[*current_position].text);
+    
+    
 
-    if(condition != 0){ //condition is true 
+    if(condition == -1){ //condition is true 
         while (tokens[*current_position].text != NULL || strcmp(tokens[*current_position].text, "then") == 0){ //iterate over stack hel
+            (*current_position)++;
+            printf("%s\n", tokens[*current_position].text);
+            if(tokens[*current_position].type != CONDITIONAL){
+                process_to_stack(stk, tokens, dict); //I think it is passing in all the tokens again from the parameter so it restarts the call from the begining of the statement 
+                (*current_position)++;
+            }else{
+                parseif(stk, tokens, current_position, dict);
+            }
             
+        }
+    } else if(condition == 0) { //condition is false ie 0, must iterate until "else" keyword then process to stack until we reach then
+        while(strcmp(tokens[*current_position].text, "else") != 0 || strcmp(tokens[*current_position].text, "then") != 0){
+            (*current_position)++;
+            printf("%s\n", tokens[*current_position].text);
+            if((strcmp(tokens[*current_position].text, "if") == 0) || (strcmp(tokens[*current_position].text, "else") == 0) || (strcmp(tokens[*current_position].text, "then") == 0)){
+                parseif(stk, tokens, current_position, dict);
+            }
+        }
+
+        while (tokens[*current_position].text != NULL || strcmp(tokens[*current_position].text, "then") == 0){
+            process_to_stack(stk, tokens, dict);
+        }
+    }
+    
+}
+
+/*
+void parseif(stack_i *stk, token_t* tokens, int *current_position, dictionary *dict){
+    //: is-it-zero?  0 = if ." Yes!" else ." No!" then ;
+    //condition comes before if statement and pushes -1 or 0 onto stack 
+    // : zero? 0 = if -1 else 0 then ;
+    int condition;
+    printf("%s\n", tokens[*current_position].text);
+    if(strcmp(tokens[*current_position].text, "if") == 0){ // need to make sure that the conditon is only applied for the first recursive call
+        int num = stack_pop(stk, &condition);
+        printf("%d", num);
+    }
+    if(strcmp(tokens[*current_position].text, "then") == 0){ //base case 
+        return;
+    }
+    
+
+    if(condition == -1){ //condition is true 
+        while (tokens[*current_position].text != NULL || strcmp(tokens[*current_position].text, "then") == 0){ //iterate over stack hel
+            (*current_position)++;
             if(tokens[*current_position].type != CONDITIONAL){
                 process_to_stack(stk, tokens, dict);
                 (*current_position)++;
@@ -97,7 +152,7 @@ void parseif(stack_i *stk, token_t* tokens, int *current_position, dictionary *d
             }
             
         }
-    } else { //condition is false ie 0, must iterate until "else" keyword then process to stack until we reach then
+    } else if(condition == 0) { //condition is false ie 0, must iterate until "else" keyword then process to stack until we reach then
         while(strcmp(tokens[*current_position].text, "else") != 0 || strcmp(tokens[*current_position].text, "then") != 0){
             (*current_position)++;
             printf("%s\n", tokens[*current_position].text);
@@ -271,8 +326,10 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
             processComparison(stack, tokens[numTokens]);
             numTokens++;
             break;
-        case CONDITIONAL: //comparison 
+        case CONDITIONAL: //Conditonal
             parseif(stack, tokens, &numTokens, dictionary);
+            //if(strcmp(tokens[numTokens].text, "if") == 0) parseif(stack, tokens, &numTokens, dictionary);
+            //if(strcmp(tokens[numTokens].text, "else") == 0) parseelse(stack, tokens, &numTokens, dictionary);
             numTokens++;
             break;
         default: // default
