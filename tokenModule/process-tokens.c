@@ -113,11 +113,11 @@ void parseif(stack_i *stk, token_t* tokens, int *current_position, dictionary *d
         while (tokens[*current_position].text != NULL && strcmp(tokens[*current_position].text, "then") != 0 
         && strcmp(tokens[*current_position].text, "else") != 0){ //iterate over stack until then or else
             
-            if(tokens[*current_position].type != CONDITIONAL){
-
-                (*current_position)++;
-            }else{
+            if((strcmp(tokens[*current_position].text, "if") == 0)){
                 parseif(stk, tokens, current_position, dict);
+            }else{
+                pushTokenToArray(&tokensToProcess, &sizeOfTokens, tokens[*current_position]);
+                (*current_position)++;
             }
         }
         //skip until the then statement
