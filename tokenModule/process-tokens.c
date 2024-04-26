@@ -97,12 +97,6 @@ void parseif(stack_i *stk, token_t* tokens, int *current_position, dictionary *d
 
     // rest of the function below retrives the tokens to run discards the ones to not run
 
-/*
-        if(strcmp(tokens[*current_position].text, "then") == 0){ //base case 
-        return;
-        }
-*/
-
     int condition;
     if(strcmp(tokens[*current_position].text, "if") == 0){ // need to make sure that the conditon is only applied for the first recursive call
         stack_pop(stk, &condition);
@@ -121,44 +115,40 @@ void parseif(stack_i *stk, token_t* tokens, int *current_position, dictionary *d
                 parseif(stk, tokens, current_position, dict);
             }
         }
-
-        if(strcmp(tokens[*current_position].text, "else") == 0){
-            //we hit an else, we want to skip until a then
+        //skip until the then statement
+        while (tokens[*current_position].text != NULL && strcmp(tokens[*current_position].text, "then") != 0){
             (*current_position)++;
-            while (tokens[*current_position].text != NULL && strcmp(tokens[*current_position].text, "then") != 0){
-                (*current_position)++;
-            }
-
         }
-        //now we hit a then so we skip it
-        //(*current_position)++; for some reason the then is not a token
 
     } else if(condition == 0) { //condition is false ie 0, must iterate until "else" keyword then process to stack until we reach then
-        while(strcmp(tokens[*current_position].text, "else") != 0 || strcmp(tokens[*current_position].text, "then") != 0){
+        while(strcmp(tokens[*current_position].text, "else") != 0 && strcmp(tokens[*current_position].text, "then") != 0){
             (*current_position)++;
             if((strcmp(tokens[*current_position].text, "if") == 0)){
                 parseif(stk, tokens, current_position, dict);
             }
         }
+
     //skip until a then
     while (tokens[*current_position].text != NULL && strcmp(tokens[*current_position].text, "then") != 0){
-        if(tokens[*current_position].type != CONDITIONAL){
-            pushTokenToArray(&tokensToProcess, &sizeOfTokens, tokens[*current_position]);
+        if(strcmp(tokens[*current_position].text, "if") == 0){
+            parseif(stk, tokens, current_position, dict);
+        }else if(strcmp(tokens[*current_position].text, "else") == 0){
             (*current_position)++;
         }else{
-            parseif(stk, tokens, current_position, dict);
+            pushTokenToArray(&tokensToProcess, &sizeOfTokens, tokens[*current_position]);
+            (*current_position)++;
         }
     }
         // now we hit a then so skip it
-        (*current_position)++;
+        // (*current_position)++; same issue here
     }
 
     // now we process the tokens we need too
     pushTokenToArray(&tokensToProcess, &sizeOfTokens, nullTerminator); // add null terminator
     process_to_stack(stk, tokensToProcess, dict); // got all the tokens, now process them and skip all tokens until the if statement
-    
+    (*current_position)++; // skip the then token
+    free(tokensToProcess);
 }
-
 
 void initiateLoop(int* starting_ending, int* isInLoop, stack_i* stack, int* tokenAmount){
     int top_value, next_to_top_value;
@@ -195,7 +185,6 @@ token_t* cleanUpI(const token_t* loopTokens, int tokenAmount, int currentIterati
 
     return newTokens;  // Return the new array
 }
-
 
 void runLoop(int* starting_ending, int* isInLoop, stack_i* stack, token_t* loopTokens, int tokenAmount, dictionary *dictionary){
 
@@ -263,12 +252,14 @@ void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
             break;
         case CONDITIONAL: //Conditonal
             parseif(stack, tokens, &numTokens, dictionary);
-            //if(strcmp(tokens[numTokens].text, "if") == 0) parseif(stack, tokens, &numTokens, dictionary);
-            //if(strcmp(tokens[numTokens].text, "else") == 0) parseelse(stack, tokens, &numTokens, dictionary);
             break;
         default: // default
             break;
     }
+    }
+        // Free loopTokens if it was dynamically allocated
+    if (loopTokens != NULL) {
+        free(loopTokens);
     }
     numTokens = 0;
 }

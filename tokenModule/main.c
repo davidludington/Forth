@@ -8,7 +8,7 @@
 
 //this is where the program starts
 
-#define MAX_INPUT_SIZE 20
+#define MAX_INPUT_SIZE 50
 
 // Function to get a line of input
 char* getInput() {
