@@ -85,6 +85,12 @@ void pushTokenToArray(token_t** loopTokens, int* tokenAmount, token_t newToken) 
     (*tokenAmount)++;
 }
 
+token_t* advanceToCurrentToken(token_t* tokens, int* current_position){
+    token_t* current_token = &tokens[*current_position];
+    (*current_position)++;
+    return current_token;
+}
+
 
 void parseif(stack_i *stk, token_t* tokens, int *current_position, dictionary *dict){
     //: is-it-zero?  0 = if ." Yes!" else ." No!" then ;
@@ -108,8 +114,7 @@ void parseif(stack_i *stk, token_t* tokens, int *current_position, dictionary *d
         && strcmp(tokens[*current_position].text, "else") != 0){ //iterate over stack until then or else
             
             if(tokens[*current_position].type != CONDITIONAL){
-                pushTokenToArray(&tokensToProcess, &sizeOfTokens, tokens[*current_position]);
-                //process_to_stack(stk, &tokens[*current_position], dict);
+
                 (*current_position)++;
             }else{
                 parseif(stk, tokens, current_position, dict);
@@ -118,6 +123,7 @@ void parseif(stack_i *stk, token_t* tokens, int *current_position, dictionary *d
         //skip until the then statement
         while (tokens[*current_position].text != NULL && strcmp(tokens[*current_position].text, "then") != 0){
             (*current_position)++;
+
         }
 
     } else if(condition == 0) { //condition is false ie 0, must iterate until "else" keyword then process to stack until we reach then
