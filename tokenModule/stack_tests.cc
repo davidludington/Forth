@@ -199,6 +199,26 @@ TEST(Tokens, Dictionary){
     }
     free(tokens);
 }
+TEST(Tokens, IfStatement) {
+    //TRUE IF STATEMENT
+    const char* input = "0 0 = if 5 else 6 then"; // Use const char* instead of char*
+    stack_i stack;
+    stack_init(&stack, 8);
+    dictionary *dictionary = create_dictionary();
+    // apparently I need to do this for c compatibility
+    token_t* tokens = getTokens(const_cast<char*>(input));
+    process_to_stack(&stack, tokens, dictionary); 
+
+    entry_t* entry;
+    int pos = 0; 
+    SLIST_FOREACH(entry, &stack.head, entries) {
+        if(pos == 0){
+            ASSERT_EQ(entry->value, 5); // 100 + 100
+        }
+        pos++; // Increment pos
+    }
+    free(tokens);
+}
 
 int main(int argc, char **argv)
 {
