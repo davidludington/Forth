@@ -2,6 +2,7 @@
 This is an implementation of the Forth programmign language in C
 
 ## About 
+Forth is a stack-based programming language known for its simplicity and efficiency. Programs are composed of words, which are essentially functions or procedures, and these words manipulate a data stack, allowing for a very concise and flexible coding style. It's often used in situations where low-level control and performance are important, such as in robotics, embedded devices, and some specialized applications.
 
 ## Installation and Run 
 ```
@@ -16,7 +17,7 @@ cmake --build build
 ## Build Status
 ![FORTH](https://github.com/davidludington/Forth/actions/workflows/cmake.yml/badge.svg)
 
-### How to add numbers to the stack
+## Adding numbers to the stack
 Separate the numbers with a space
 
 ```
@@ -74,16 +75,23 @@ Separate the numbers with a space
 |`0<`| less than zero; pops off top value, compares to zero, then pushes `1` on the stack if the top item is less than  0 or it pushes `0` if the top is greater than 0|
 |`0>`| greater than zero; pops off top value, compares to zero, then pushes `1` on the stack if the top item is greater than  0 or it pushes `0` if the top is less than 0 |
 
+## Loops
+(*range of values*) `do` (*token to be procesed during loop*) `loop`
+### Example 
+`10 0 do i . loop`
+- this call will push values 0-9 onto the sack while simotaneouslty poping and printing the values to the console 
+-> `0 1 3 4 5 6 7 8 9`
+## Conditionals
+ (*boolean condition*) `if` (*tokens processeed if true*) `else` (*tokens processed if false*) `then`
 
-### Usage
+the boolean conditon pushes a -1 (true) or a 0 (false) onto the stack because of the comparison token then executes the tokens inbetween the if and the else if the condition is true and the token between the else and the then if the condition is false
+### Example 
+`0 = if -1 else 0 then`
+- `0 =` pushes -1 or 0 based on what is already on the stack
+- `-1` gets pushed onto stack if the conditon is true i.e. -1 is on the stack after `0 = ` is executed
+- `0`gets pushed onto stack if the conditon is false i.e. 0 is on the stack after `0 =` is executed 
 
-### Usage
-```
-1 2 dup
-```
-`Output`:
-```
-1 2 2 <-Top
-```
 
-# Forth
+
+
+
