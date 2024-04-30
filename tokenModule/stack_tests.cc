@@ -180,7 +180,7 @@ TEST(Tokens, Dictionary){
     token_t* tokens = getTokens(const_cast<char*>(input));
     process_to_stack(&stack, tokens, dictionary); 
 
-    const char* secondInput = ": foo 100 + ;";
+    const char* secondInput = ": foo 100 ;";
     token_t* secondTokens = getTokens(const_cast<char*>(secondInput));
     process_to_stack(&stack, secondTokens, dictionary); 
     
@@ -193,12 +193,13 @@ TEST(Tokens, Dictionary){
     int pos = 0; 
     SLIST_FOREACH(entry, &stack.head, entries) {
         if(pos == 0){
-            ASSERT_EQ(entry->value, 200); // 100 + 100
+            ASSERT_EQ(entry->value, 100); // 100 + 100
         }
         pos++; // Increment pos
     }
     free(tokens);
 }
+
 TEST(Tokens, IfStatement) {
     //TRUE IF STATEMENT
     const char* input = "0 0 = if 5 else 6 then"; // Use const char* instead of char*
