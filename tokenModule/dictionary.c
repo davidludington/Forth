@@ -41,7 +41,6 @@ if (item->size == 0) {
 }
 }
 
-
 void print_dictionary_words(dictionary *dict) {
     if (dict == NULL || dict->items == NULL) {
         return;
@@ -57,14 +56,19 @@ void print_dictionary_words(dictionary *dict) {
 }
 
 token_t* retrieve_dict_tokens(dictionary *dict, char *word) {
+
+    token_t nullTerminator = {.type = 1, .text = NULL}; 
     if (dict == NULL || dict->items == NULL || word == NULL) {
         return NULL; // Invalid dictionary or word
     }
     
     for (int i = 0; i < dict->size; i++) {
         dictionary_item *item = &dict->items[i]; // Use pointer to avoid copying
+        token_t *newTokens = (token_t*)malloc(sizeof(token_t));
         if (item != NULL && item->tokens != NULL && item->size > 0 && strcmp(item->text, word) == 0) {
-            return item->tokens; // Return the tokens associated with the word
+            *newTokens = *item->tokens;
+            newTokens[item->size] = nullTerminator;
+            return newTokens; // Return the tokens associated with the word
         }
     }
     return NULL; // Word not found

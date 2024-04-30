@@ -199,12 +199,9 @@ void runLoop(int* starting_ending, int* isInLoop, stack_i* stack, token_t* loopT
         token_t* cleanedTokens = cleanUpI(loopTokens, tokenAmount, i);
         cleanedTokens[tokenAmount].text = NULL;
         process_to_stack(stack, cleanedTokens, dictionary);
-        free(cleanedTokens);
     }
     *isInLoop = 0;
 }
-
-
 
 
 void process_to_stack(stack_i* stack, token_t* tokens, dictionary *dictionary){
